@@ -1,7 +1,20 @@
 .App {
   text-align: center;
 }
-
+button{
+  padding: 5px;
+  border-radius: 5px;
+  background-color: lightblue;
+  
+}
+.search-bar{
+  /* align-items: center; */
+  /* margin-top: 50px; */
+ border: none;
+ border-bottom: 2px solid grey;
+ padding: 5px;
+ width: 300px;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -61,4 +74,16 @@ gap: 40px;
   to {
     transform: rotate(360deg);
   }
+}
+
+.input_container{
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.main_container{
+  padding: 20px;
 }

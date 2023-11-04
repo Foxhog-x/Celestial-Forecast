@@ -6,52 +6,64 @@ const Wheather = () => {
   const [temprature, setTemprature] = useState(null);
   const [titleImage, setTitleImage] = useState(null);
   const [noCityFound, setNoCityFound] = useState(null);
+  const [loader, setLoader] = useState(false);
+
   const apiKey = "dd00f982e8d9c3f07a0f35f636352aa6";
 
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
   const apiData = () => {
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the weather data here
-        if (data.cod === "404") {
-          setWheatherData(null);
-        } else {
-          setWheatherData(data);
-          setNoCityFound(null);
-        }
+    setWheatherData(null);
+    setLoader(true);
+    if (cityName !== "") {
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the weather data here
+          if (data.cod === "404") {
+            setWheatherData(null);
+          } else {
+            setWheatherData(data);
+            setLoader(false);
+            setNoCityFound(null);
+          }
 
-        console.log(data);
-        const iconCode = data ? data?.weather[0]?.icon : null;
+          const iconCode = data ? data?.weather[0]?.icon : null;
 
-        const temp = Math.round(data.main.temp - 273.15);
-        const mainImage = `http://openweathermap.org/img/w/${iconCode}.png`;
-        setTemprature(temp);
-        setTitleImage(mainImage);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setNoCityFound("City Not Found");
-      });
+          const temp = Math.round(data.main.temp - 273.15);
+          const mainImage = `http://openweathermap.org/img/w/${iconCode}.png`;
+          setTemprature(temp);
+          setTitleImage(mainImage);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setLoader(false);
+          setNoCityFound("City Not Found");
+        });
+    } else {
+      window.alert("Please enter the city");
+      setLoader(false);
+    }
   };
+
+  console.log(cityName !== null || cityName !== "", "boolean");
 
   const handleChange = (event) => {
     setCityName(event.target.value);
   };
 
-  console.log(noCityFound, "citynotfound");
   return (
-    <div>
-      <input type="text" placeholder="Search here" onChange={handleChange} />
-      <button
-        onClick={() => {
-          apiData();
-        }}
-      >
-        Search
-      </button>
-
+    <div className="main_container">
+      <div className="input_container">
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Search here"
+          onChange={handleChange}
+        />
+        <button onClick={() => apiData()}>Search</button>
+      </div>
+      {loader && <p>Loading Data...</p>}
       {noCityFound !== null ? <h3>{noCityFound}</h3> : null}
       <div>
         {wheatherData !== null ? (
@@ -89,7 +101,7 @@ const Wheather = () => {
             </div>
           </div>
         ) : (
-          "search City"
+          ""
         )}
       </div>
     </div>
