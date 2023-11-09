@@ -4,7 +4,6 @@ const Wheather = () => {
   const [wheatherData, setWheatherData] = useState(null);
   const [cityName, setCityName] = useState("");
   const [temprature, setTemprature] = useState(null);
-  const [titleImage, setTitleImage] = useState(null); //
   const [noCityFound, setNoCityFound] = useState(null);
   const [loader, setLoader] = useState(false);
   const [date, setDate] = useState();
@@ -13,7 +12,8 @@ const Wheather = () => {
 
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
-  const apiData = () => {
+  const apiData = (event) => {
+    event?.preventDefault();
     setNoCityFound(null);
     setWheatherData(null);
     setLoader(true);
@@ -49,11 +49,9 @@ const Wheather = () => {
           setTime(formatedTime);
           setDate(formateddate);
 
-          const iconCode = data ? data?.weather[0]?.icon : null;
           const temp = Math.round(data.main.temp - 273.15);
-          const mainImage = `http://openweathermap.org/img/w/${iconCode}.png`;
+
           setTemprature(temp);
-          setTitleImage(mainImage);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -70,17 +68,18 @@ const Wheather = () => {
     setCityName(event.target.value);
   };
 
-  console.log(wheatherData);
   return (
     <div className="main-container">
       <div className="search-div">
-        <input
-          className="search-bar"
-          type="text"
-          placeholder="Search City here"
-          onChange={handleChange}
-        />
-        <button onClick={() => apiData()}>Search</button>
+        <form method="POST">
+          <input
+            className="search-bar"
+            type="text"
+            placeholder="Search City here"
+            onChange={handleChange}
+          />
+          <button onClick={(event) => apiData(event)}>Search</button>
+        </form>
       </div>
       {loader && <p>Loading Data...</p>}
       {noCityFound !== null ? <h3>{noCityFound}</h3> : null}
