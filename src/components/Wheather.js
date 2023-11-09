@@ -8,10 +8,11 @@ const Wheather = () => {
   const [loader, setLoader] = useState(false);
   const [date, setDate] = useState();
   const [time, setTime] = useState();
+  const [feelsLike, setFeelsLike] = useState();
   const apiKey = process.env.REACT_APP_API_KEY;
 
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
-
+  console.log(wheatherData);
   const apiData = (event) => {
     event?.preventDefault();
     setNoCityFound(null);
@@ -50,7 +51,7 @@ const Wheather = () => {
           setDate(formateddate);
 
           const temp = Math.round(data.main.temp - 273.15);
-
+          setFeelsLike(Math.round(data.main.feels_like - 273.15));
           setTemprature(temp);
         })
         .catch((error) => {
@@ -126,7 +127,7 @@ const Wheather = () => {
               </div>
             </div>
 
-            <span>Feels like</span>
+            <span>Feels like {feelsLike}</span>
           </div>
         </div>
       ) : (
