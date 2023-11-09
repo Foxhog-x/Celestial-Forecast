@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import dateandtime from "../date&time";
 
 const Wheather = () => {
   const [wheatherData, setWheatherData] = useState(null);
@@ -6,6 +7,7 @@ const Wheather = () => {
   const [temprature, setTemprature] = useState(null);
   const [noCityFound, setNoCityFound] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [greeting, setGreeting] = useState();
   const [date, setDate] = useState();
   const [time, setTime] = useState();
   const [feelsLike, setFeelsLike] = useState();
@@ -31,26 +33,29 @@ const Wheather = () => {
             setLoader(false);
             setNoCityFound(null);
           }
-
           const offsetSeconds = data.timezone;
-
+          const temp = Math.round(data.main.temp - 273.15);
           const now = new Date();
-
           const targetTime = new Date(now.getTime() + offsetSeconds * 1000);
-
           const year = targetTime.getUTCFullYear();
           const month = targetTime.getUTCMonth() + 1;
           const day = targetTime.getUTCDate();
           const hours = targetTime.getUTCHours();
           const minutes = targetTime.getUTCMinutes();
+          const ampm = hours > 12 ? "pm" : "am";
+          console.log(ampm, "ampm");
 
-          const formatedTime = `${hours}:${minutes}`;
+          const convertedHour = hours % 12 || 12;
+          const formatedTime = `${hours % 12 || 12}:${minutes}${ampm}`;
           const formateddate = `${day}.${month}.${year}`;
+          const store = dateandtime(ampm, convertedHour);
 
           setTime(formatedTime);
           setDate(formateddate);
 
-          const temp = Math.round(data.main.temp - 273.15);
+          store !== null
+            ? setGreeting(store)
+            : setGreeting("can not recived", "greet");
           setFeelsLike(Math.round(data.main.feels_like - 273.15));
           setTemprature(temp);
         })
@@ -68,7 +73,7 @@ const Wheather = () => {
   const handleChange = (event) => {
     setCityName(event.target.value);
   };
-
+  console.log(greeting);
   return (
     <div className="main-container">
       <div className="search-div">
@@ -113,8 +118,8 @@ const Wheather = () => {
           </div>
 
           <div className="right-container">
-            <h1>Good Morning</h1>
-            <h2>12.27pm</h2>
+            <h1>{greeting}</h1>
+            <h2>{time}</h2>
             <div className="right-internal">
               <p className="p-temp">
                 {temprature}
@@ -127,7 +132,10 @@ const Wheather = () => {
               </div>
             </div>
 
-            <span>Feels like {feelsLike}</span>
+            <span>
+              Feels like {feelsLike}
+              <span>&#176;</span>
+            </span>
           </div>
         </div>
       ) : (
@@ -136,5 +144,4 @@ const Wheather = () => {
     </div>
   );
 };
-
 export default Wheather;
