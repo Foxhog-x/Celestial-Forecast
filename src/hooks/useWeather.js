@@ -13,9 +13,11 @@ const useWeather = () => {
   /**
    *
    * @param {'search' | 'getLocation'} btnType
+   * @param {'event'} e
    */
 
-  function handleApi(btnType) {
+  function handleApi(btnType, event) {
+    event.preventDefault();
     if (btnType === "getLocation") {
       if (lat !== null) {
         setNotFound("");

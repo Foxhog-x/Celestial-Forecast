@@ -35,27 +35,31 @@ export function getDateTimeWithOffset(offsetSeconds) {
 }
 
 export const dateandtime = (ampm, hour) => {
-  ampm.toLowerCase();
-
+  ampm = ampm.toLowerCase();
+  console.log(ampm, hour);
   switch (ampm) {
     case "am":
-      if (hour < 12 && hour >= 5) {
-        console.log("good Morning");
-        return "Good Morning";
-      } else if (hour === 12 || hour < 6) {
-        console.log("MidNight");
+      if (hour === "12") {
         return "MidNight";
       }
+      if (hour > 0 && hour <= 6) {
+        return "MidNight";
+      }
+      if (hour >= 6 && hour <= 11) {
+        return "Good Morning";
+      }
       break;
+
     case "pm":
-      if (hour >= 6 && hour < 12) {
-        console.log("good evening");
-        return "Good Evening";
-      } else if (hour === 12 || hour < 6) {
-        console.log("GOOD AFTERNOON");
+      if (hour === 12) {
         return "Good Afternoon";
       }
-
+      if (hour > 0 && hour <= 6) {
+        return "Good Afternoon";
+      }
+      if (hour >= 6 && hour <= 11) {
+        return "Good Evening";
+      }
       break;
     default:
       console.log(null);

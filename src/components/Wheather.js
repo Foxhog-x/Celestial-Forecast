@@ -9,18 +9,24 @@ const Wheather = () => {
   return (
     <div className="main-container">
       <div className="search-div">
-        <input
-          className="search-bar"
-          type="text"
-          placeholder="Search City here"
-          value={cityName}
-          onChange={(e) => SetCityName(e.target.value)}
-        />
-        <button onClick={() => handleApi("search")}>Search</button>
+        <form>
+          <input
+            className="search-bar"
+            type="text"
+            placeholder="Search City here"
+            value={cityName}
+            onChange={(e) => SetCityName(e.target.value)}
+          />
+          <button onClick={(event) => handleApi("search", event)}>
+            Search
+          </button>
 
-        {lat !== null ? (
-          <button onClick={() => handleApi("getLocation")}>Get Location</button>
-        ) : null}
+          {lat !== null ? (
+            <button onClick={(event) => handleApi("getLocation", event)}>
+              Get Location
+            </button>
+          ) : null}
+        </form>
       </div>
       {notFound ? (
         notFound
@@ -70,18 +76,30 @@ const Wheather = () => {
             <div className="right-internal">
               <p className="p-temp">
                 {}
-                <span>&#176;</span>
+                <span>
+                  {convertKelvinToCelsius(wheather?.main?.temp)}&#176;
+                </span>
               </p>
               <div className="vertical"></div>
               <div className="right">
-                <p> mph</p>
-                <p> humidity</p>
+                <p>
+                  {" "}
+                  {mileToKillometer(wheather?.wind?.speed)}
+                  <span></span> mph
+                </p>
+                <p>
+                  {" "}
+                  <span>{wheather?.main?.humidity}</span> humidity
+                </p>
               </div>
             </div>
 
             <span>
               Feels like
-              <span>&#176;</span>
+              <span>
+                {" "}
+                {convertKelvinToCelsius(wheather?.main?.feels_like)}&#176;
+              </span>
             </span>
           </div>
         </div>
