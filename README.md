@@ -4,7 +4,7 @@ Celestial Forecast is a stunning React Weather App that brings a delightful user
 
 ## Description
 
-Celestial Forecast provides a beautiful way to explore current weather conditions and the 5-day forecast for any location. The application not only delivers accurate weather information but also offers an immersive and stylish user interface designed to enhance the overall experience.
+Celestial Forecast provides a beautiful way to explore current weather conditions for any location. The application not only delivers accurate weather information but also offers an immersive and stylish user interface designed to enhance the overall experience.
 
 ## Motivation/Goal
 
