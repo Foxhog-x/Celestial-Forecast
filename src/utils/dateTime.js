@@ -29,14 +29,14 @@ export function getDateTimeWithOffset(offsetSeconds) {
 
   // Format the date and time based on the options
   const formattedDateTime = newDateWithOffset.toLocaleString("en-US", options);
-  console.log(formattedDateTime.slice(-8, -6));
+
   // Return the formatted date and time
   return formattedDateTime;
 }
 
 export const dateandtime = (ampm, hour) => {
   ampm = ampm.toLowerCase();
-  console.log(ampm, hour);
+
   switch (ampm) {
     case "am":
       if (hour === "12") {

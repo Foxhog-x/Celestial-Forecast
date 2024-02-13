@@ -7,6 +7,7 @@ const useWeather = () => {
   const [cityName, SetCityName] = useState("");
   const [notFound, setNotFound] = useState("");
   const [wheather, SetWheatherData] = useState(null);
+
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
   const geoApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${log}&appid=${apiKey}`;
 
@@ -63,6 +64,7 @@ const useWeather = () => {
       );
     }
   }, [lat]);
+
   console.log(wheather);
   return {
     SetCityName,

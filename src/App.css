@@ -9,11 +9,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-image: url(../img/nepal-2184940_1920.jpg);
+      /* background-image: url(../img/nepal-2184940_1920.jpg); */
       background-size: cover;
       background-repeat: no-repeat;
       
   }
+ 
   *{
       color: FFF;
       font-family: 'Sometype Mono', monospace;

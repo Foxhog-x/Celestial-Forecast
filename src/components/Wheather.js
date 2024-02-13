@@ -1,13 +1,33 @@
+import { useState } from "react";
 import useWeather from "../hooks/useWeather";
 import { dateandtime, getDateTimeWithOffset } from "../utils/dateTime";
 import { mileToKillometer } from "../utils/genralConvert";
 import { convertKelvinToCelsius } from "../utils/temprature";
+import { changeWallpaper } from "../utils/changeWallpaper";
 
 const Wheather = () => {
   const { SetCityName, handleApi, notFound, wheather, cityName, lat } =
     useWeather();
+  const greet = dateandtime(
+    getDateTimeWithOffset(wheather?.timezone).slice(-2),
+    getDateTimeWithOffset(wheather?.timezone).slice(-8, -6)
+  );
+
   return (
-    <div className="main-container">
+    <div
+      className="main-container"
+      style={{
+        backgroundImage: `url(/${changeWallpaper(
+          wheather?.weather[0].main,
+          dateandtime(
+            getDateTimeWithOffset(wheather?.timezone).slice(-2),
+            getDateTimeWithOffset(wheather?.timezone).slice(-8, -6)
+          )
+        )}.jpg)`,
+        backgroundRepeat: "no-repeat",
+        color: greet === "MidNight" ? "white" : "black",
+      }}
+    >
       <div className="search-div">
         <form>
           <input
