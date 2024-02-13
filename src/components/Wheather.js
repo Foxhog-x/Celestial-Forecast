@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useWeather from "../hooks/useWeather";
 import { dateandtime, getDateTimeWithOffset } from "../utils/dateTime";
 import { mileToKillometer } from "../utils/genralConvert";
